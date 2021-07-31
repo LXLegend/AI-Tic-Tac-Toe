@@ -4,8 +4,9 @@ using UnityEngine;
 
 public static class MiniMax
 {
+    static int maxDepth = GameSettings.Difficulty;
 
-    static bool MovesLeft(int[,] boardState)
+    public static bool MovesLeft(int[,] boardState)
     {
         for (int x = 0; x < boardState.GetLength(0); x++)
             for (int y = 0; y < boardState.GetLength(1); y++)
@@ -45,7 +46,13 @@ public static class MiniMax
                     {
                         boardState[x, y] = 1;
 
-                        best = Mathf.Max(best, MiniMaxFunc(boardState, depth + 1, !isMax));
+                        if (depth < maxDepth)
+                            best = Mathf.Max(best, MiniMaxFunc(boardState, depth + 1, !isMax));
+                        else
+                        {
+                            boardState[x, y] = 0;
+                            return 0;
+                        }
 
                         boardState[x, y] = 0;
                     }
@@ -66,7 +73,14 @@ public static class MiniMax
                     {
                         boardState[x, y] = 2;
 
-                        best = Mathf.Min(best, MiniMaxFunc(boardState, depth + 1, !isMax));
+                        if (depth < maxDepth)
+                            best = Mathf.Min(best, MiniMaxFunc(boardState, depth + 1, !isMax));
+                        else
+                        {
+                            boardState[x, y] = 0;
+                            return 0;
+                        }
+
 
                         boardState[x, y] = 0;
                     }
@@ -150,7 +164,7 @@ public static class MiniMax
 
     public static int[] FindBestMove(int[,] boardState, int player)
     {
-        int bestVal = player == 1 ? -boardState.GetLength(0) * boardState.GetLength(1) : boardState.GetLength(0) * boardState.GetLength(1);
+        int bestVal = player == 1 ? -boardState.GetLength(0) * boardState.GetLength(1) - 1 : boardState.GetLength(0) * boardState.GetLength(1) + 1;
 
         int[] bestMove = { -1, -1 };
 

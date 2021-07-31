@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,9 +27,17 @@ public class GameManager : MonoBehaviour
     // does the AI make the first move?
     public bool AIFirst = false;
 
+    [Space(10)]
+
+    public Canvas canvas;
+
+    public TMP_Text text;
+
     // Start is called before the first frame update
     void Start()
     {
+        TwoPlayers = GameSettings.twoPlayers;
+        AIFirst = GameSettings.AIFirst;
         InitializeGrid();
         PositionCamera();
     }
@@ -35,18 +45,58 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (gameState)
+        if (MiniMax.Evaluate(grid) > 0)
         {
-            case 1:
-                GetPlayerInput();
-                break;
-            case 2:
-                AIMove();
-                break;
-            default:
-                break;
+            EndGame("X's Win");
         }
-        GetPlayerInput();
+        else if (MiniMax.Evaluate(grid) < 0)
+        {
+            EndGame("O's Win");
+        }
+        else
+        {
+            if (!MiniMax.MovesLeft(grid))
+            {
+                EndGame("Tie!");
+            }
+
+        }
+        if (TwoPlayers)
+        {
+            switch (gameState)
+            {
+                case 1:
+                        GetPlayerInput();
+                    break;
+                case 2:
+                        GetPlayerInput();
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            switch (gameState)
+            {
+                case 1:
+                    if (!AIFirst)
+                        GetPlayerInput();
+                    else
+                        AIMove();
+                    break;
+                case 2:
+                    if (!AIFirst)
+                        AIMove();
+                    else
+                        GetPlayerInput();
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        // GetPlayerInput();
     }
 
     // x invite you to guess what it does. it places the grid prefabs based on the grid size and spacing.
@@ -74,11 +124,6 @@ public class GameManager : MonoBehaviour
         camRef.orthographicSize = Mathf.Max((gridSize.y * gridSpacing + 1) / 2, (gridSize.x * gridSpacing + 1) / 2);
     }
 
-    public void UpdateBoardState()
-    {
-
-    }
-
     public void AIMove()
     {
         int[] move = MiniMax.FindBestMove(grid, gameState);
@@ -90,7 +135,7 @@ public class GameManager : MonoBehaviour
             if (gridVal == 0)
             {
                 gridVal = gameState;
-                Instantiate(OPrefab, slotPos, Quaternion.identity);
+                _ = (gameState == 1) ? Instantiate(XPrefab, slotPos, Quaternion.identity) : Instantiate(OPrefab, slotPos, Quaternion.identity);
                 gameState = (gameState % 2) + 1;
             }
         }
@@ -110,15 +155,22 @@ public class GameManager : MonoBehaviour
                 if (gridVal == 0)
                 {
                     gridVal = gameState;
-                    Instantiate(XPrefab, slotPos, Quaternion.identity);
-                    //int[] move = MiniMax.FindBestMove(grid, 2);
-                    //print(move[0]);
-                    //print(move[1]);
+                    _ = (gameState == 1) ? Instantiate(XPrefab, slotPos, Quaternion.identity) : Instantiate(OPrefab, slotPos, Quaternion.identity);
                     gameState = (gameState % 2) + 1;
                 }
             }
             
         }
+
+    }
+    
+    void EndGame(string newText)
+    {
+        gameState = 0;
+        if (canvas)
+            canvas.gameObject.SetActive(true);
+        if (text)
+            text.text = newText;
 
     }
 }
