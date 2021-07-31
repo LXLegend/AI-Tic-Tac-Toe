@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
     public void AIMove()
     {
-        int[] move = MiniMax.FindBestMove(grid, 2);
+        int[] move = MiniMax.FindBestMove(grid, gameState);
         // rip error checking- dw about it
         if ((move[0] != -1 && move[1] != -1))
         {
