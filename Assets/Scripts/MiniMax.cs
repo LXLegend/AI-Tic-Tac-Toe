@@ -4,8 +4,10 @@ using UnityEngine;
 
 public static class MiniMax
 {
+    // the max depth the algorithm will recurse to in order to determine the next step- if the board gets big this number needs to stay low
     static int maxDepth = GameSettings.Difficulty;
 
+    // function to check if there are any moves that can be made on the board
     public static bool MovesLeft(int[,] boardState)
     {
         for (int x = 0; x < boardState.GetLength(0); x++)
@@ -15,8 +17,10 @@ public static class MiniMax
         return false;
     }
 
+    // Function that calls itse;f recursively to determine and score the best board state. Takes a boardstate, a depth, and a bool as parameters
     static int MiniMaxFunc(int[,] boardState, int depth, bool isMax)
     {
+        // This section determines the score of the board passed in. If it is an end state the function returns the score, or zero if it is a draw.
         int score = Evaluate(boardState);
 
         if (score == boardState.GetLength(0) * boardState.GetLength(1))
@@ -34,6 +38,7 @@ public static class MiniMax
             return 0;
         }
 
+        // checks to see if the board state needs to be a max or a min, and then finds the optimal board state and returns the score
         if (isMax)
         {
             int best = -boardState.GetLength(0) * boardState.GetLength(1);
@@ -162,6 +167,7 @@ public static class MiniMax
         return 0;
     }
 
+    // calls the minimax function and returns the best move for the player
     public static int[] FindBestMove(int[,] boardState, int player)
     {
         int bestVal = player == 1 ? -boardState.GetLength(0) * boardState.GetLength(1) - 1 : boardState.GetLength(0) * boardState.GetLength(1) + 1;
