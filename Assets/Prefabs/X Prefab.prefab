@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ba2d97d98dcdaf44bef3372209eea72, type: 2}
+  - {fileID: 2100000, guid: 821ca5a23160045e0af4b7c62f21c666, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,7 +140,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ba2d97d98dcdaf44bef3372209eea72, type: 2}
+  - {fileID: 2100000, guid: 821ca5a23160045e0af4b7c62f21c666, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,6 +171,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8112154685896329925}
+  - component: {fileID: -4722567314549383192}
+  - component: {fileID: 4084118986887319285}
+  - component: {fileID: 8864889713313554251}
   m_Layer: 0
   m_Name: X Prefab
   m_TagString: Untagged
@@ -194,3 +197,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-4722567314549383192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7900367671693249479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: fd7b49bd04c2b4ec2989f14fcafca760, type: 2}
+--- !u!111 &4084118986887319285
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7900367671693249479}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 7496f2ce0b2074b4c9ebd61e4fe7e34f, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 7496f2ce0b2074b4c9ebd61e4fe7e34f, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &8864889713313554251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7900367671693249479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe275e7ece834e589fe1f8a5cf050dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPos: {x: 0, y: 0, z: 0}
+  finalPosOffset: {x: 0, y: 0.125, z: 0}
+  animTime: 0.8
+  delay: 0

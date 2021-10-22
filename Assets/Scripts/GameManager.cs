@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text text;
 
+    public float slotYPos = 0.125f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -120,8 +122,8 @@ public class GameManager : MonoBehaviour
     public void PositionCamera()
     {
         Camera camRef = Camera.main;
-        camRef.transform.position = new Vector3((gridSize.x * gridSpacing / 2) - (gridSpacing / 2), 10, (gridSize.y * gridSpacing / 2) - (gridSpacing / 2));
-        camRef.orthographicSize = Mathf.Max((gridSize.y * gridSpacing + 1) / 2, (gridSize.x * gridSpacing + 1) / 2);
+        // camRef.transform.position = new Vector3((gridSize.x * gridSpacing / 2) - (gridSpacing / 2), 10, (gridSize.y * gridSpacing / 2) - (gridSpacing / 2));
+        // camRef.orthographicSize = Mathf.Max((gridSize.y * gridSpacing + 1) / 2, (gridSize.x * gridSpacing + 1) / 2);
     }
 
     public void AIMove()
@@ -131,12 +133,18 @@ public class GameManager : MonoBehaviour
         if ((move[0] != -1 && move[1] != -1))
         {
             ref int gridVal = ref grid[move[0], move[1]];
-            Vector3 slotPos = new Vector3(move[0], 0, move[1]);
+            Vector3 slotPos = new Vector3(move[0], slotYPos, move[1]);
             if (gridVal == 0)
             {
                 gridVal = gameState;
-                _ = (gameState == 1) ? Instantiate(XPrefab, slotPos, Quaternion.identity) : Instantiate(OPrefab, slotPos, Quaternion.identity);
+                GameObject piece = (gameState == 1) ? Instantiate(XPrefab, slotPos, Quaternion.identity) : Instantiate(OPrefab, slotPos, Quaternion.identity); // StartCoroutine("InstantiateWithDelay(0.1f, XPrefab, slotPos, Quaternion.identity)") : StartCoroutine("InstantiateWithDelay(0.1f, OPrefab, slotPos, Quaternion.identity)");
+                //if (gameState == 1)
+                //    Invoke("InstantiateWithDelay(XPrefab, slotPos, Quaternion.identity)", 0.1f);
+                //else
+                //    Invoke("InstantiateWithDelay(OPrefab, slotPos, Quaternion.identity)", 0.1f);
                 gameState = (gameState % 2) + 1;
+                piece.GetComponent<PieceAnimation>().delay = 0.5f;
+
             }
         }
     }
@@ -147,9 +155,9 @@ public class GameManager : MonoBehaviour
         {
             Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
-            if (Physics.Raycast(mouseRay, out hitInfo, Camera.main.transform.position.y))
+            if (Physics.Raycast(mouseRay, out hitInfo, Camera.main.transform.position.y + 10f))
             {
-                Vector3 slotPos = hitInfo.transform.position;
+                Vector3 slotPos = hitInfo.transform.position + Vector3.up * slotYPos;
                 print(slotPos);
                 ref int gridVal = ref grid[(int)slotPos.x, (int)slotPos.z];
                 if (gridVal == 0)

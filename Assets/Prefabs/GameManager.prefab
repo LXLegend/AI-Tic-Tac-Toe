@@ -43,8 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fe95b0e1ed0e146ac4db6228061d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotPrefab: {fileID: 2153447075739617520, guid: 524d847adef18e1488ccb39e7b5ef905, type: 3}
+  SlotPrefab: {fileID: 7919334063482636366, guid: 9dabb66866b9e4c8496382c77db7fce9, type: 3}
   XPrefab: {fileID: 7900367671693249479, guid: 5c38896c5452f4f458b7535e2c58fc7e, type: 3}
   OPrefab: {fileID: 196737887399758691, guid: a9219b42f630da44e97787680a4c9b6a, type: 3}
   gridSize: {x: 3, y: 3}
   gridSpacing: 1
+  TwoPlayers: 0
+  AIFirst: 0
+  canvas: {fileID: 0}
+  text: {fileID: 0}
